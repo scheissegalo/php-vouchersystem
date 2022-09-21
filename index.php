@@ -64,6 +64,11 @@ function fileReader(){
 	fclose($myfile);
 }
 
+function formatCode($n){
+	//xxxxx-xxxxx-xxxxx-xxxxx-xxxxx
+	return vsprintf('%s%s%s%s%s-%s%s%s%s%s-%s%s%s%s%s-%s%s%s%s%s-%s%s%s%s%s', str_split($n));
+}
+
 function displayAllVouchers($ap_option){
 	
 	global $baseDirectory;
@@ -77,7 +82,7 @@ function displayAllVouchers($ap_option){
 		$image = $rows['img_path'];
 		$imgout .= '<div id="download"><h4>ID: '.$rows['id'].'</h4>';
 		$imgout .= '<img src="'.$image.'" /><br>';
-		$imgout .= 'Key: <a href="'.$rows['url'].'" >'.$rows['vkey'].'</a><br>';
+		$imgout .= 'Key: <a href="'.$rows['url'].'" >'.formatCode($rows['vkey']).'</a><br>';
 		$imgout .= '<a class="button" href="'.$image.'" download="'.$image.'">Download</a><br></div>';
 		
 	}

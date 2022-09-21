@@ -71,6 +71,11 @@ function cleanDataBase($conn){
     //array_map( 'unlink', array_filter((array) glob($baseDirectory."*")));
 }
 
+function formatCode($n){
+	//xxxxx-xxxxx-xxxxx-xxxxx-xxxxx
+	return vsprintf('%s%s%s%s%s-%s%s%s%s%s-%s%s%s%s%s-%s%s%s%s%s-%s%s%s%s%s', str_split($n));
+}
+
 function generateCodes($conn, $url, $vochercount, $appointmentOption){
 
 	global $baseDirectory;
@@ -85,6 +90,7 @@ function generateCodes($conn, $url, $vochercount, $appointmentOption){
 	for ($i = 0; $i < $vochercount; $i++){
 		//Generate randomString
 		$currentCode = generateRandomString(25);
+		//xxxxx-xxxxx-xxxxx-xxxxx-xxxxx
 
         $sqlEvents = "SELECT MAX(`id`) FROM `vocher`;";
         $resultset = mysqli_query($conn, $sqlEvents) or die("database error:". mysqli_error($conn));
@@ -112,7 +118,7 @@ function generateCodes($conn, $url, $vochercount, $appointmentOption){
 		//imagepng($image);
 		$fileName = $baseDirectory."qr_".$i.".png";
 		imagepng($image, $fileName, 9);
-		saveQRCodeToGiftcard($image, $fileName, $currentCode, $i, $appointmentOption, $newID);
+		saveQRCodeToGiftcard($image, $fileName, formatCode($currentCode), $i, $appointmentOption, $newID);
 		imagedestroy($image);
 
 	}
