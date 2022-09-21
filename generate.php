@@ -27,7 +27,9 @@ if ($doGenerateCodes) {
 		cleanDataBase($conn);
 	}	
 	$generatedCodes = generateCodes($conn, $vocherurl, $vochercount, $appointmentOption);
-	$bodycontents = 'Codes successfully generated';
+	header( "refresh:3;url=".$mainURL );
+  	echo '<div style="text-align:center;"><h2>Codes successfully generated</h2><br>You\'ll be redirected in about 3 secs. If not, click <a href="'.$mainURL.'">here</a>.</div>';
+	exit;
 }else{
     $sqlEvents = 'SELECT * FROM vocher WHERE `status` = 1;'; 
 	$resultset = mysqli_query($conn, $sqlEvents) or die("database error:". mysqli_error($conn));
@@ -103,7 +105,7 @@ function generateCodes($conn, $url, $vochercount, $appointmentOption){
 		$generator = new QRCode($url.$currentCode, $options);
 
 		/* Output directly to standard output. */
-		$generator->output_image();
+		//$generator->output_image();
 
 		/* Create bitmap image. */
 		$image = $generator->render_image();
