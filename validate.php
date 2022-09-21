@@ -3,6 +3,11 @@
     
     $bodycontents = '';
 
+    function formatCode($n){
+        //xxxxx-xxxxx-xxxxx-xxxxx-xxxxx
+        return vsprintf('%s%s%s%s%s-%s%s%s%s%s-%s%s%s%s%s-%s%s%s%s%s-%s%s%s%s%s', str_split($n));
+    }
+
     if (isset($_POST['submit'])){
         //print $_POST['submit'];
         if ($_POST['submit'] == 1){
@@ -21,16 +26,25 @@
             $results = mysqli_query($conn, $sql) or die("database error:". mysqli_error($conn));
             //header("Location: $calendar_url");
 
+        }elseif ($_POST['submit'] == 4){
+            // Manual Code check
+            $vocherID = $_POST['vocherid1'].$_POST['vocherid2'].$_POST['vocherid3'].$_POST['vocherid4'].$_POST['vocherid5'];
+            //header("Location: $calendar_url");
+
         }
 
     }else{
         //print "Not Set";
     }    
-    
+
     if (isset($_GET['vocherid'])){
         $vocherID = $_GET['vocherid'];
+    }
+    
+    if (isset($vocherID)){
+        
 
-        $sqlEvents = "SELECT vkey FROM vocher WHERE `status` = 1;";
+        $sqlEvents = "SELECT vkey, img_path FROM vocher WHERE `status` = 1;";
         $resultset = mysqli_query($conn, $sqlEvents) or die("database error:". mysqli_error($conn));
 
         $stat = false;
@@ -40,29 +54,61 @@
                 //Match
                 $stat = true;
                 $vkey = $rows['vkey'];
+                $image = $rows['img_path'];
             }
         }
 
         if ($stat == true){
             
-            $bodycontents = $vkey.'<br>
-            <form method="POST" action="'.$ValidateURL.'?vocherid='. $vocherID.'">
-                <button type="submit" id="fas" name="submit" value="1">Accept</button>
-                <button type="submit" id="fas" name="submit" value="2">Decline</button>
-                <button type="submit" id="fas" name="submit" value="3">Delete</button>
-            </form>';
+            $bodycontents = formatCode($vkey).'<br>';
+            $bodycontents .= '<img src="'.$image.'" class="image" /><br/>';
             $bodycontents .= "Your vocher code is valid!";
         }else{
             $bodycontents .= "Your vocher code is invalid!";
+            header( "refresh:3;url=".$ValidateURL );
+            $bodycontents .= '<div style="text-align:center;">You\'ll be redirected in about 3 secs. If not, click <a href="'.$ValidateURL.'">here</a>.</div>';
         }
 
     }else{
         // NO Vocher ID
-        $bodycontents .= 'No Vocher ID';
+        $bodycontents .= 'No Vocher ID<br>
+                        Please scan the QR-Code on your voucher or enter your code here:<br>
+                        <form method="POST" action="'.$ValidateURL.'">
+                            <input type="text" name="vocherid1" placeholder="xxxxx" maxlength="5" style="max-width:50px;">
+                            <input type="text" name="vocherid2" placeholder="xxxxx" maxlength="5" style="max-width:50px;">
+                            <input type="text" name="vocherid3" placeholder="xxxxx" maxlength="5" style="max-width:50px;">
+                            <input type="text" name="vocherid4" placeholder="xxxxx" maxlength="5" style="max-width:50px;">
+                            <input type="text" name="vocherid5" placeholder="xxxxx" maxlength="5" style="max-width:50px;">
+                            <button type="submit" id="fas" name="submit" value="4">Check</button>
+                        </form>';
     }
     
 ?>
-<div align="center">
-    <h1>Vocher Validator</h1><br>
-    <?php print $bodycontents; ?>
-</div>
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8" />
+		<title>Voucher Validator</title>
+
+		<?php print $headerLinks ?>
+		
+	</head>
+
+	<body>
+		<div align="center">
+            <h1>Vocher Validator</h1><br>
+			<?php print $bodycontents."<br/>";?>
+		</div>
+		<div id="dvModal">
+			<div id="dvContent">
+				<img src="#" alt="Image 03" />
+				<p id="imageTitle">Title here</p>
+			</div>
+		</div>
+	</body>
+
+	<?php print $footerLinks ?>
+
+</html>
+<?php $conn->close(); ?>
