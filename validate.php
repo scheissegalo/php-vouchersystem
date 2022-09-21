@@ -1,12 +1,7 @@
 <?php
-    include ('connect.php');
+    include 'connect.php';
     
-    //URL for validation
-    $rooturl = 'http://localhost/q/';
-    $url = $rooturl.'validate.php';
-
     $bodycontents = '';
-
 
     if (isset($_POST['submit'])){
         //print $_POST['submit'];
@@ -28,11 +23,9 @@
 
         }
 
-
     }else{
         //print "Not Set";
-    }
-    
+    }    
     
     if (isset($_GET['vocherid'])){
         $vocherID = $_GET['vocherid'];
@@ -53,7 +46,7 @@
         if ($stat == true){
             
             $bodycontents = $vkey.'<br>
-            <form method="POST" action="'.$url.'?vocherid='. $vocherID.'">
+            <form method="POST" action="'.$ValidateURL.'?vocherid='. $vocherID.'">
                 <button type="submit" id="fas" name="submit" value="1">Accept</button>
                 <button type="submit" id="fas" name="submit" value="2">Decline</button>
                 <button type="submit" id="fas" name="submit" value="3">Delete</button>

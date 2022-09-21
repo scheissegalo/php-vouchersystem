@@ -1,32 +1,24 @@
 <?php
-include ('connect.php');
+include 'connect.php';
 include 'qrcode.php';
-
-//URL for validation
-$realrooturl = 'http://localhost/q/';
-//$url = $rooturl.'confirm.php?vocherid=';	
 
 $bodycontents = '<h1>Voucher Generator</h1>';
 $doGenerateCodes = false;
 $generatedCodes = '';
-$baseDirectory = 'output/';
 
 //URL for validation
-$rooturl = 'http://localhost/q/generate.php';
-$url = 'http://localhost/q/confirm.php?vocherid=';	
+$rooturl = $mainURL.'generate.php';
+$url = $ValidateURL.'?vocherid=';	
 
 if (isset($_POST['submit'])) {
 	$vochercount = $_POST['vochercount'];
 	$vocherurl = $_POST['vocherurl'];
-	//print $vochercount.' '.$vocherurl;
 	$appointmentOption = $_POST['ap_option'];
 	if (isset($_POST['del_db'])){
 		$del_DB = true;
 	}else{
 		$del_DB = false;
 	}
-	//print "Del DB: ".$del_DB;
-	//print "ap_option: ".$appointmentOption;
 	$doGenerateCodes = true;
 }
 
@@ -41,7 +33,7 @@ if ($doGenerateCodes) {
 	$resultset = mysqli_query($conn, $sqlEvents) or die("database error:". mysqli_error($conn));
     $countRows = mysqli_num_rows($resultset);
 	$bodycontents = '<h1>Voucher Generator - '.$countRows.'Valid Vouchers in database</h1><br>
-    <a href="'.$realrooturl.'index.php" >Voucher Dashboard</a> | <a href="'.$realrooturl.'validate.php" >Validate Voucher</a><br>
+    <a href="'.$mainURL.'index.php" >Voucher Dashboard</a> | <a href="'.$mainURL.'validate.php" >Validate Voucher</a><br>
 	<form method="POST" action="'.$rooturl.'">
 		<label>Vocher Count</label>
 		<input type="number" name="vochercount" value="10" min="5" max="100" step="1" ><br>
@@ -73,21 +65,8 @@ function cleanDataBase($conn){
 	if ($conn->query($sql) === TRUE) {
 	//echo "New record created successfully";
 	}
+	// TODO: Delete all vouchers from directory
     //array_map( 'unlink', array_filter((array) glob($baseDirectory."*")));
-}
-
-function displayAllVouchers(){
-	
-	global $baseDirectory;
-	$imgout = '';
-
-	$images = glob($baseDirectory."*.jpg");
-	foreach($images as $image) {
-		$imgout .= '<div id="download"><img src="'.$image.'" /><br>';
-		$imgout .= '<a class="button" href="'.$image.'" download="'.$image.'">Download</a></div>';
-	}
-
-	return $imgout;
 }
 
 function generateCodes($conn, $url, $vochercount, $appointmentOption){
@@ -118,7 +97,7 @@ function generateCodes($conn, $url, $vochercount, $appointmentOption){
 		VALUES ('".$currentCode."', '1', '".$datenow."', '".$url.$currentCode."', '".$appointmentOption."', '".$baseDirectory.'whc_gc_'.$newID.'_'.$appointmentOption.'.jpg'."')";
 
 		if ($conn->query($sql) === TRUE) {
-		//echo "New record created successfully";
+			//echo "New record created successfully";
 		}
 
 		$generator = new QRCode($url.$currentCode, $options);
@@ -134,24 +113,6 @@ function generateCodes($conn, $url, $vochercount, $appointmentOption){
 		saveQRCodeToGiftcard($image, $fileName, $currentCode, $i, $appointmentOption, $newID);
 		imagedestroy($image);
 
-		/*
-		$content .= '				{
-			title: "'.$currentCode.'",
-			url: "'.$url.$currentCode.'",
-			config: {
-				text: "'.$url.$currentCode.'",
-
-				width: 300,
-				height: 300,
-				quietZone: 0,
-				colorDark: "#000000",
-				colorLight: "#ffffff",
-				
-				correctLevel: QRCode.CorrectLevel.H // L, M, Q, H
-			}
-		},	
-		';
-		*/
 	}
 
 	return $content;
@@ -162,32 +123,31 @@ function generateCodes($conn, $url, $vochercount, $appointmentOption){
 function saveQRCodeToGiftcard($qrImage, $fileName, $qrCode, $id, $ap_option, $DB_id){
 
 	global $baseDirectory;
+	global $font_path;
+	global $voucher15min;
+	global $voucher30min;
 	
 	if ($ap_option == "15"){
-		$dest = imagecreatefromjpeg('whc_gc_15.jpg');
+		$dest = imagecreatefromjpeg($voucher15min);
 	}else{
-		$dest = imagecreatefromjpeg('whc_gc_30.jpg');
+		$dest = imagecreatefromjpeg($voucher30min);
 	}
 	
 	$src = imagecreatefrompng($fileName);
 	
-	//imagealphablending($dest, false);
-	//imagesavealpha($dest, true);
-	
-	imagecopymerge($dest, $src, 850, 250, 0, 0, 285, 285, 100); //have to play with these numbers for it to work for you, etc.
+	imagecopymerge($dest, $src, 850, 250, 0, 0, 285, 285, 100); 
 	
 	// Allocate A Color For The Text
 	$white = imagecolorallocate($dest, 198, 143, 102);
-	// Set Path to Font File
-	$font_path = 'D:\\xamp2\\htdocs\\q\\Nunito-Regular.ttf';
 	// Set Text to Be Printed On Image
 	$text = "Code: ".$qrCode;
 	$text2 = "Scan with your Phone";
 	
 	// Print Text On Image | size, angle, x, y,
-	imagettftext($dest, 20, 0, 350, 720, $white, $font_path, $text);
-	imagettftext($dest, 15, 0, 890, 560, $white, $font_path, $text2);
+	imagettftext($dest, 20, 0, 350, 720, $white, $font_path, $text); // Print Code
+	imagettftext($dest, 15, 0, 890, 560, $white, $font_path, $text2); // Print Scan with your Phone
 	
+	// TODO reload dashboard after images are generated
 	//header('Content-Type: image/jpeg');
 	imagejpeg($dest, $baseDirectory.'whc_gc_'.$DB_id.'_'.$ap_option.'.jpg', 100);
 	

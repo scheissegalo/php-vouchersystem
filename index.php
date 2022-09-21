@@ -2,11 +2,10 @@
 include ('connect.php');
 
 //URL for validation
-$rooturl = 'http://localhost/q/';
-$url = $rooturl.'confirm.php?vocherid=';	
+$url = $mainURL.'validate.php?vocherid=';	
 
 $bodycontents = '<h1>Voucher Dashboard</h1>
-<a href="'.$rooturl.'generate.php" >Generate Voucher</a> | <a href="'.$rooturl.'validate.php" >Validate Voucher</a>';
+<a href="'.$mainURL.'generate.php" >Generate Voucher</a> | <a href="'.$mainURL.'validate.php" >Validate Voucher</a>';
 $baseDirectory = 'output/';
 $codeListTxt = 'CodeList.txt';
 
