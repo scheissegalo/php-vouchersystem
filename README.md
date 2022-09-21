@@ -7,12 +7,13 @@
 <br>
 
 <h4 align="center">
-    Basic PHP voucher system with QR code validator. Administration Dashboard
+    Basic PHP voucher system with QR code validator.
 </h4>
 
 <p align="center">
   <a href="#about">About</a> •
   <a href="#features">Features</a> •
+  <a href="#todo">To do</a> •
   <a href="#setup">Setup</a> •
   <a href="#installation">Installation</a> •
   <a href="#license">License</a>
@@ -64,33 +65,16 @@ You will need to perform the following steps to install the application on your 
 
 That's it! You can now use php-vouchersystem at your will.
 
-You will find the latest release at [easyappointments.org](https://easyappointments.org).
-If you have problems installing or configuring the application visit the
-[official support group](https://groups.google.com/forum/#!forum/easy-appointments).
-You can also report problems on the [issues page](https://github.com/alextselegidis/easyappointments/issues)
+
+You can report problems on the [issues page](https://github.com/scheissegalo/php-vouchersystem/issues)
 and help the development progress.
 
 ## License 
 
-Code Licensed Under [GPL v3.0](https://www.gnu.org/licenses/gpl-3.0.en.html) | Content Under [CC BY 3.0](https://creativecommons.org/licenses/by/3.0/)
+Code Licensed Under [MIT](https://github.com/scheissegalo/php-vouchersystem/blob/main/LICENSE)
 
 ---
 
-Website [alextselegidis.com](https://alextselegidis.com) &nbsp;&middot;&nbsp;
-GitHub [alextselegidis](https://github.com/alextselegidis) &nbsp;&middot;&nbsp;
-Twitter [@alextselegidis](https://twitter.com/AlexTselegidis)
+Website [karich.design](https://karich.design) &nbsp;&middot;&nbsp;
+GitHub [scheissegalo](https://github.com/scheissegalo) &nbsp;&middot;&nbsp;
 
-###### More Projects On Github
-###### ⇾ [Plainpad &middot; Self Hosted Note Taking App](https://github.com/alextselegidis/plainpad)
-###### ⇾ [Questionful &middot; Web Questionnaires Made Easy](https://github.com/alextselegidis/questionful)
-###### ⇾ [Integravy &middot; Service Orchestration At Your Fingertips](https://github.com/alextselegidis/integravy)
-
-
-# php-vouchersystem
-Basic PHP voucher system with QR code validator
-
-Check connect.php for variables
-
-create folder "output" and give writing rights
-
-PHP, MYSQL
