@@ -3,10 +3,10 @@ include ('connect.php');
 include 'qrcode.php';
 
 /*
-Todo: Rename file to not spam output folder
-Uppercase with php
+Todo: Rename file to not spam output folder | rename("/test/file1.txt","/home/docs/my_file.txt");
+Uppercase with php | echo strtoupper("Hello WORLD!");
 redirect on download | JS?
-Format date on Card
+Format date on Card | https://www.w3schools.com/php/func_date_date_format.asp
 default option in forms
 */
 
