@@ -4,17 +4,23 @@ body{
 }
 
 #header{
-    text-align: left;
-    margin: 0;
+    text-align: center;
+    margin: 0 0 50px 0;
     line-height: 80px;
-    background-color: #007bff;
+    background-color: #b69d78;
     color: #fff;
     padding-left: 20px;
+    padding-top: 30px;
     font-size: 36px;
 }
 
 #header a{color: #FFFF00;}
 #header a:hover{color: #FF9933;}
+.sub_header{
+  font-size: 0.4em;
+  line-height: 1px;
+}
+
 #container {
     /* width: 1030px; */
     margin: 10px auto;
@@ -26,10 +32,6 @@ body{
     float: left;
     min-height: 420px;
     border-bottom: 1px solid #B4B7B4;
-}
-
-.qr table {
-    
 }
 
 .title {
@@ -60,9 +62,144 @@ body{
     display: inline-block;
     padding: 10px 10px 10px 10px;
 }
-
-
-
+.form_item{
+  text-align: left;
+  width: 32%;
+  display: inline-block;
+  padding-top: 5px;
+  vertical-align: middle;
+}
+.form_item img{
+  max-width: 100%;
+  border-radius: 5px;
+}
+.form_item span{
+  font-size: 0.6em;
+}
+.form_item_container{
+  max-width: 600px;
+  background-color:#B4B7B4;
+  margin: 10px;
+  padding: 10px;
+  border-radius: 20px;
+  border: solid 1px #ccc;
+}
+.form_item_container h2{
+  padding: 20px;
+  font-size: 2em;
+  text-transform: uppercase;
+}
+.form_item_container button{
+  padding: 10px 30px;
+  border-radius: 5px;
+  text-transform: uppercase;
+  font-weight: 800;
+  background-color: #a9fca1;
+  cursor: pointer;
+}
+.form_container{
+  width: 600px;
+}
+.gen_image_container{
+  background-color: #FF9933;
+  padding: 10px;
+  margin: 10px;
+  border-radius: 20px;
+}
+.gen_image_container h2{
+  margin: 10px 0 30px 0;
+  font-size: 2em;
+  text-transform: uppercase;
+}
+.gen_image_container a{
+  padding: 10px 30px;
+  background-color: chocolate;
+  border: solid 1px #000;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  display: inline-block;
+  margin: 10px;
+  text-decoration: none;
+  color: #000;
+  font-weight: 600;
+}
+.gen_image{
+  background-color: #FFF;
+  display: inline-block;
+  margin: 10px;
+  padding: 10px;
+  border: solid 1px #000;
+  border-radius: 20px;
+}
+.gen_image img{
+  max-width: 1000px;
+}
+.subtitle{
+  padding: 10px;
+}
+.voucher-admin{
+  text-align: center;
+  align-content: center;
+}
+.code_text{
+  padding: 10px 30px;
+  background-color: chocolate;
+  border: solid 1px #000;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  display: inline-block;
+}
+.voucher_container{
+  border: solid 1px #000;
+  border-radius: 10px;
+  width: 30%;
+  margin: 5px;
+}
+.voucher_container a{
+  text-decoration: none;
+  background-color : rgb(198,143,102);
+  border:solid 1px #0084C6;
+  border-radius: 5px;
+  padding: 5px 10px;
+  color: rgb(49, 49, 49);
+  display: inline-block;
+  margin: 5px 0;
+}
+.voucher_container button{
+  padding: 5px 10px;
+  border-radius: 5px;
+}
+.voucher_container h4{
+  margin: 5px;
+}
+.voucher_content{
+  width: 1200px;
+  background-color: #dae9ee;
+  border-radius: 20px;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+.voucher_title{
+  margin: 30px;
+  padding: 20px 50px;
+  text-transform: uppercase;
+  background-color: #0084C6;
+  border-radius: 10px;
+  color: #ccc;
+  font-size: 3em;
+}
+.voucher_declined{
+  background-color: #ff00002a;
+}
+.voucher_accepted{
+  background-color: #0000002a;
+}
+.voucher_available{
+  background-color: #15ff002a;
+}
+.voucher_downloadet{
+  background-color: #fffb002a;
+}
 
 
 

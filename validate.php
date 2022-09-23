@@ -44,7 +44,7 @@
     if (isset($vocherID)){
         
 
-        $sqlEvents = "SELECT vkey, img_path FROM vocher WHERE `status` = 1;";
+        $sqlEvents = "SELECT vkey, img_path, status FROM vocher";
         $resultset = mysqli_query($conn, $sqlEvents) or die("database error:". mysqli_error($conn));
 
         $stat = false;
@@ -52,23 +52,44 @@
         while( $rows = mysqli_fetch_assoc($resultset) ) {
             if ($rows['vkey'] == $vocherID) {
                 //Match
-                $stat = true;
                 $vkey = $rows['vkey'];
+                $voucher_status = $rows['status'];
                 $image = $rows['img_path'];
+                $stat == true;
+                break;
+            }else{
+                $voucher_status='9';
             }
         }
 
-        if ($stat == true){
-            
+        if ($voucher_status == 0){ // accepted
             $bodycontents = formatCode($vkey).'<br>';
             $bodycontents .= '<img src="'.$image.'" class="image" /><br/>';
-            $bodycontents .= "Your vocher code is valid!";
+            $bodycontents .= "Your vocher code is already used!";			
+        }elseif ($voucher_status == 3){ // available / Downloadet
+            $bodycontents = formatCode($vkey).'<br>';
+            $bodycontents .= '<img src="'.$image.'" class="image" /><br/>';
+            $bodycontents .= "Your vocher code is available! -- make appointment/contact <a href=\"".$homepage."\">Homepage</a>";	
+        }elseif ($voucher_status == 2){ // Declined
+            $bodycontents = formatCode($vkey).'<br>';
+            $bodycontents .= '<img src="'.$image.'" class="image" /><br/>';
+            $bodycontents .= "Your vocher was declined";
         }else{
             $bodycontents .= "Your vocher code is invalid!";
             header( "refresh:3;url=".$ValidateURL );
             $bodycontents .= '<div style="text-align:center;">You\'ll be redirected in about 3 secs. If not, click <a href="'.$ValidateURL.'">here</a>.</div>';
         }
-
+/*
+        if ($stat == true){            
+            $bodycontents = formatCode($vkey).'<br>';
+            $bodycontents .= '<img src="'.$image.'" class="image" /><br/>';
+            $bodycontents .= "Your vocher code is valid!";
+        }else{
+            $bodycontents .= "Your vocher code is invalid!";
+            //header( "refresh:3;url=".$ValidateURL );
+            $bodycontents .= '<div style="text-align:center;">You\'ll be redirected in about 3 secs. If not, click <a href="'.$ValidateURL.'">here</a>.</div>';
+        }
+*/
     }else{
         // NO Vocher ID
         $bodycontents .= 'No Vocher ID<br>
